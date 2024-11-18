@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" 
+            onload="renderMathInElement(document.body);"></script>    
+    <title>Обучающая новелла "Классическая схема теории вероятностей"</title>
+    
+    <!-- Встроенный CSS -->
+    <style>
+        /* Стили для body */
+        body {
+            font-family: Roboto, Arial, Helvetica, sans-serif;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-size: 1.5em;
+        }
+
+        /* Стили для контейнера */
+        .container {
+            text-align: justify;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .c {
+            text-align: center;
+        }
+
+        /* Стили для изображения */
+        img {
+            margin-top: 15px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Кнопка */
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .image-container img {
+           transition: opacity 1s ease-in-out;
+            opacity: 1;
+        }
+
+        .image-container img.fade-out {
+            opacity: 0;
+        }        
+
+        #imageCube {
+            width: 57px; /* Установите размер по необходимости */
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .cubeButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }        
+    </style>
+</head>
+<body>
+
+    <!-- HTML контент -->
+    <div id="d1" class="container" style="display: block;">
+        <h1 class="c">Обучающая новелла </h1>
+        <h3 class="c">"Классическая схема теории вероятностей"</h3>
+        <p class="c">
+            <button onclick="next('d1', 'd2')">начнем...</button>
+        </p>
+    </div>
+
+    <div id="d2" class="container" style="display: none;">
+        <h3 class="c">Случайный выбор</h3>
+        <p>
+        Простейшая вероятностная ситуация состоит в том, что <em>случайно</em> делается выбор из <em>N</em> вариантов, 
+        например, подбрасывается шестигранный кубик. Среди этих <em>N</em> вариантов есть <em>M</em> вариантов, которые мы ассоциируем как "успех".
+        </p>
+        <p>
+            В этом случае вероятностью события <em>A</em>, которое состоит в том, что будет успех, 
+            определяется по формуле:
+        </p>
+        <p>
+            \[P(A)=\frac{M}{N}\]
+        </p>
+        <p>
+            Пример: подбрасывается кубик, событие <em>A</em> состоит в том, что выпадет нечетное число. 
+            В этом случае <em>N</em> = 6, <em>M</em> = 3, вероятность:
+        </p>
+        <p>
+            \[P(A)=\frac{3}{6}=\frac{1}{2}\]
+        </p>
+        <div class="c"><img src="n1_pic/cubes.png"/></div>
+        <p class="c">
+            <button onclick="next('d2', 'd1')">...назад</button> <button onclick="next('d2', 'd3')">вперед...</button>
+        </p>
+    </div>
+
+    <div id="d3" class="container" style="display: none;">
+        <h3 class="c">Эксперимент</h3>
+        <p>
+            Бросайте кубик несколько раз и отмечайте, сколько раз будет нечетное число.
+        </p>
+        <p class="c">
+            <img id="image" src="n1_pic/1.jpg">
+            <button id="cubeButton" class="cubeButton">Бросить кубик</button>
+        </p>
+        <p>
+            Частота выпадания нечетных чисел: <span id="prob">нет бросков</span>
+        </p>
+        <p>
+            При большом числе бросков частота выпадания нечетных чисел будет стремиться к 0.5.
+        </p>
+        <p class="c">
+            <button onclick="next('d3', 'd2')">...назад</button> <button onclick="next('d3', 'd4')">вперед...</button>
+        </p>
+    </div>
+
+    <div id="d4" class="container" style="display: none;">
+        <h3 class="c">Решение простейших задач</h3>
+        <h4 class="c">Задача:</h4>
+        <p class="c">
+            <img id="image" src="n1_pic/valet.png">
+        </p>
+        <p>
+            Из колоды 36 карт наугад выбирают одну карту. С какой вероятностью это 
+            будет валет?
+        </p>
+        <h4 class="c">Решение:</h4>
+        <p>
+            Всего возможных вариантов выбора одной карты из колоды - 36, поэтому
+            число <em>N</em> = 36. Вариантов "успеха" всего 4 
+            (столько вальтов в колоде), поэтому <em>M</em> = 4. Следовательно,
+            вероятность выбрать вальта равна:
+        </p>
+        <p>
+            \[P(A)=\frac{M}{N}=\frac{4}{36}=\frac{1}{9}.\]
+        </p>
+        <h4 class="c">Задача:</h4>
+        <p class="c">
+            <img id="image" src="n1_pic/class.png">
+        </p>
+        <p>
+            В классе учатся 25 школьников. Из них 15 девочек и 10 мальчиков. 
+            С какой вероятностью случайно выбранный ученик будет мальчиком?
+        </p>
+        <h4 class="c">Решение:</h4>
+        <p>
+            Всего возможных вариантов выбора одного ученика - 25, поэтому
+            число <em>N</em> = 25. Вариантов "успеха" всего 10 
+            (столько мальчиков в классе), поэтому <em>M</em> = 10. Следовательно,
+            вероятность выбрать мальчика равна:
+        </p>
+        <p>
+            \[P(A)=\frac{M}{N}=\frac{10}{25}=\frac{2}{5}.\]
+        </p>
+        <p class="c">
+            <button onclick="next('d4', 'd3')">...назад</button> <button onclick="next('d4', 'd5')">вперед...</button>
+        </p>
+    </div>
+
+    <div id="d5" class="container" style="display: none;">
+        <h3 class="c">Сведения из комбинаторики</h3>
+        <p>
+            Для решения более сложных задач нужны простейшие сведения из комбинаторики,
+            которые мы сейчас с Вами рассмотрим.
+        </p>
+        <p>
+            В комбинаторных формулах мы будем использовать понятие факториала.
+            Если Вы не уверены, что хорошо знаете, что такое факториал, то 
+            посмотрите наше объяснение: 
+            <button onclick="next('d5', 'd_fact')">хочу узнать про факториал</button>
+        </p>
+        <p>
+            Для решения задач по теории вероятностей очень часто нужно вычислить 
+            сколькими различными спососбами можно извлечь из множества, содержащего
+            <em>n</em> объектов ровно <em>k</em> штук без учета последовательности 
+            выбираемых объектов.
+        </p>
+        <p>
+            Например, сколькими способами можно извлечь из колоды 36 карт 6 различных 
+            карт?
+        </p>
+        <p>
+            Это количество вычисляется по формуле:
+        </p>
+        <p>
+            \[C^k_n=\frac{n!}{k!(n-k)!}\]
+        </p>
+        <p>
+            Это число называется биноминальным коэффициентом или числом сочетаний.
+        </p>
+        <p>
+            Вычислим сколько существует различных раскладов 6 карт в игру "Дурак"
+            из колоды 36 карт:
+        </p>
+        <p>
+            \[C^6_{36}=\frac{36!}{6!(36-6)!}=
+            \frac{31\cdot32\cdot33\cdot34\cdot35\cdot36}{720}=1 947 792.\]
+        </p>
+        <p>
+            Поэтому можно утверждать, что у Вас еще ни разу не было одинаковой начальной 
+            раскладки 6 карт.
+        </p>
+        <p>
+            Если при выборе <em>k</em> объектов из <em>n</em> объектов нам важен 
+            порядок, то говорят о размещении <em>k</em> объектов. Число размещений
+            вычислется по формуле:
+        </p>
+        <p>
+            \[A^k_n=\frac{n!}{(n-k)!}.\]
+        </p>
+        <p>
+            Если у нас есть <em>n</em> объектов, и нас интересует количество возможных
+            перестановок этих объектов, то это количество вычислется по формуле:
+        </p>
+        <p>
+            \[P_n=n!\]
+        </p>
+
+        <p class="c">
+            <button onclick="next('d5', 'd4')">...назад</button> <button onclick="next('d5', 'd6')">вперед...</button>
+        </p>
+    </div>
+
+    <div id="d_fact" class="container" style="display: none;">
+        <h3 class="c">Что такое факториал?</h3>
+        <p class="c">
+            <img src="n1_pic/fact.png"/>
+        </p>
+        <p>
+            Факторал от целого неотрицательного числа <em>n</em> вычисляется по
+            следующей формуле:
+        </p>
+        <p>
+            \[n!=1\cdot2\cdot3\cdot\dots\cdot(n-1)\cdot n.\]
+        </p>
+        <p>
+            Вот, пример:
+        </p>
+        <p>
+            \[5!=1\cdot2\cdot3\cdot4\cdot5=120.\]
+        </p>
+        <p>
+            По определению считают: 0! = 1.
+        </p>
+        <p>
+            Заметим, что с увеличением <em>n</em> значение факториала растет очень
+            быстро. Например 70! будет больше чем единица и сто нулей 
+            (10<sup>100</sup>).
+        </p>
+        <p class="c">
+            <button onclick="next('d_fact', 'd5')">...назад</button>
+        </p>
+    </div>
+
+    <div id="d6" class="container" style="display: none;">
+        <h3 class="c">Более сложные задачи - 1</h3>
+        <h4 class="c">Задача:</h4>
+        <p class="c">
+            <img src="n1_pic/dama.png"/>
+        </p>
+        <p>
+            Из колоды 36 карт наугад выбирают 6 карт. С какой вероятностью
+            в этом наборе будет две "дамы"?
+        </p>
+        <h4 class="c">Решение:</h4>
+        <p>
+            Всего вариантов выбрать 6 карт из 36 равно:
+        </p>
+        <p>
+            \[C^6_{36}=1947792.\]
+        </p>
+        <p>
+            Вариантов выбать 2 дамы (из 4 дам):
+        </p>
+        <p>
+            \[C^2_4=6.\]
+        </p>
+        <p>
+            А еще 4 карты из "не дам". Карт, не являющихся дамами, ровно 32. Поэтому:
+        </p>
+        <p>
+            \[C^4_{32}=35960\]
+        </p>
+        <p>
+            В итоге получаем следующую вероятность:
+        </p>
+        <p>
+            \[P(A)=\frac{C^2_4\cdot C^4_{32}}{C^6_{36}}\approx0.1108.\]
+        </p>
+        <p class="c">
+            <button onclick="next('d6', 'd5')">...назад</button> <button onclick="next('d6', 'd7')">вперед...</button>
+        </p>
+    </div>
+
+    <div id="d7" class="container" style="display: none;">
+        <h3 class="c">Более сложные задачи - 2</h3>
+        <h4 class="c">Задача:</h4>
+        <p class="c">
+            <img src="n1_pic/tuz.png"/>
+        </p>
+        <p>
+            Из колоды 36 карт наугад выбирают 6 карт. С какой вероятностью
+            в этом наборе будет хотя бы один туз?
+        </p>
+        <h4 class="c">Решение:</h4>
+        <p>
+            При решении задач на "хотя бы один" следует использовать свойство,
+            что сумма вероятностей противоположных событий равна 1.
+        </p>
+        <p>
+            Поэтому сначала найдем вероятность того, что при раскладке 6 карт из 36
+            у нас не будет ни одного туза.
+        </p>
+        <p>
+            Всего вариантов выбрать 6 карт из 36 равно:
+        </p>
+        <p>
+            \[C^6_{36}=1947792.\]
+        </p>
+        <p>
+            Вариантов выбать 6 карт без тузов - это выбрать 6 из 32 (количество 
+            не-тузов):
+        </p>
+        <p>
+            \[C^6_{32}=906192.\]
+        </p>
+        <p>
+            Тогда вероятность события <em>B</em>, состоящего в том, что не будет
+            ни одного туза, равна
+        </p>
+        <p>
+            \[P(B)=\frac{C^6_{32}}{C^6_{36}}\approx0.4653.\]
+        </p>
+        <p>
+            В итоге вероятность, что будет хотя бы один туз равна
+        </p>
+        <p>
+            \[P(A)=1-P(B)\approx0.5347.\]
+        </p>
+        <p class="c">
+            <button onclick="next('d7', 'd6')">...назад</button> <button onclick="next('d7', 'd8')">вперед...</button>
+        </p>
+    </div>
+
+
+    <script>
+        // Массив с путями к изображениям
+        const images = ["n1_pic/1.jpg", "n1_pic/2.jpg", "n1_pic/3.jpg", "n1_pic/4.jpg", "n1_pic/5.jpg", "n1_pic/6.jpg"];
+        let currentIndex = 0; // Индекс текущей картинки
+        let intervalId; // Идентификатор интервала
+
+        let N = 0;
+        let M = 0;
+        let In = false;
+    
+        // Функция для переключения изображений
+        function startSlideshow() {
+            if (In) {
+                return;
+            }
+
+            In = true;
+            N++;
+            Count = Math.floor(Math.random() * (24 - 12 + 1)) + 12;
+
+            intervalId = setInterval(() => {
+                if (Count === 0) {
+                    if ((currentIndex % 2) === 1) {
+                        M++;
+                    }
+
+                    document.getElementById("prob").textContent = `${M}/${N}=${M/N}`;
+                    clearInterval(intervalId);
+                    In = false;
+                }
+                currentIndex = (currentIndex + 1) % images.length; // Следующее изображение по кругу
+                document.getElementById("image").src = images[currentIndex];
+                Count--;
+            }, 100); // Задержка в миллисекундах
+        }
+    
+        // Функция для остановки показа
+        function stopSlideshow() {
+            clearInterval(intervalId); // Останавливаем интервал
+        }
+
+  
+        // Событие для кнопки
+        document.getElementById("cubeButton").addEventListener("click", startSlideshow);
+    
+    </script>    
+
+    <!-- Встроенный JavaScript -->
+    <script>
+        function next(id1, id2) {
+
+            let e = document.getElementById(id1);
+            e.style.display = 'none'
+
+            e = document.getElementById(id2);
+            e.style.display = 'block'
+
+            window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
